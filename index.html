@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>NW mobile ｜ スタンドから、推しを。</title>
+<meta name="description" content="外付けの望遠レンズが使える vivo X300 Ultra を、試合やライブの日だけレンタル。客席から推しの表情まで撮れます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=IBM+Plex+Mono&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap">
+<style>
+  :root {
+    --ink: #0b0c0e;
+    --surface: #15171b;
+    --frame: #1a1c20;
+    --line: #2a2d33;
+    --text: #f3f2ee;
+    --text-2: #c9cacd;
+    --text-3: #a0a2a8;
+    --text-4: #6f7278;
+    --accent: #ffcc3d;
+    --sans: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    --cond: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    overflow-x: hidden;
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, p { margin: 0; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--accent); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  .eyebrow {
+    font-family: var(--cond); font-weight: 500; font-size: 15px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+  }
+  .h2 { font-weight: 900; font-size: 34px; line-height: 1.3; letter-spacing: -0.01em; text-wrap: balance; }
+  .lead { font-size: 15px; line-height: 1.75; color: var(--text-3); }
+  .note { font-size: 12px; line-height: 1.6; color: var(--text-4); }
+  .badge {
+    position: absolute; top: 12px; right: 12px; z-index: 2;
+    padding: 2px 6px; border-radius: 2px;
+    background: rgba(11,12,14,0.6);
+    font-size: 10px; letter-spacing: 0.08em; color: rgba(243,242,238,0.85);
+  }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 56px; padding: 0 20px; border-radius: 4px;
+    background: var(--accent); color: var(--ink);
+    font-size: 16px; font-weight: 700;
+  }
+  .cta:hover { color: var(--ink); background: #ffd75e; }
+  .cta svg { flex: none; }
+  .cta-note { font-size: 12px; color: var(--text-3); }
+
+  /* Header */
+  .site-head {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 3;
+    height: 64px; display: flex; align-items: center;
+  }
+  .site-head .wrap { display: flex; align-items: center; justify-content: space-between; }
+  .logo {
+    font-family: var(--cond); font-weight: 600; font-size: 24px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .nav-links { display: none; }
+  .head-cta { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; font-weight: 700; color: var(--accent); }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; background: var(--ink); }
+  .hero-media { position: relative; height: 56vw; max-height: 560px; }
+  .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 75% center; }
+  .hero-media::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(11,12,14,0.6) 0%, rgba(11,12,14,0) 30%, rgba(11,12,14,0.9) 88%, var(--ink) 100%);
+  }
+  .hero-body { position: relative; z-index: 2; margin-top: -40px; padding-bottom: 56px; display: flex; flex-direction: column; gap: 20px; }
+  .kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--accent); }
+  .hero h1 { font-weight: 900; font-size: clamp(38px, 12vw, 52px); line-height: 1.12; letter-spacing: -0.02em; }
+  .hero p.lead { color: var(--text-2); font-size: 16px; }
+  .hero-actions { display: flex; flex-direction: column; gap: 10px; }
+  .hero-actions .cta-note { text-align: center; }
+
+  /* Sections */
+  section { padding: 88px 0; }
+  .section-head { display: flex; flex-direction: column; gap: 14px; margin-bottom: 36px; }
+  .surface { background: var(--surface); }
+
+  /* Compare */
+  .compare-grid { display: grid; gap: 16px; }
+  .shot { display: flex; flex-direction: column; gap: 10px; }
+  .shot-frame { position: relative; overflow: hidden; border-radius: 4px; background: var(--frame); aspect-ratio: 3 / 2; }
+  .shot-frame img { width: 100%; height: 100%; object-fit: cover; }
+  .shot-frame.is-tele { border: 1px solid var(--accent); }
+  .shot-frame.is-tele img { object-position: center 28%; }
+  .shot-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .shot-meta span:first-child { font-size: 14px; font-weight: 700; color: var(--text-3); }
+  .shot-meta span:last-child { font-family: var(--mono); font-size: 11px; color: var(--text-4); }
+  .shot.is-tele .shot-meta span:first-child { color: var(--text); }
+  .shot.is-tele .shot-meta span:last-child { color: var(--accent); }
+
+  /* Gallery */
+  .gallery { display: grid; gap: 16px; }
+  .tile { position: relative; overflow: hidden; border-radius: 4px; background: var(--frame); aspect-ratio: 4 / 5; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; }
+  .tile-caption {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 20px;
+    background: linear-gradient(180deg, rgba(11,12,14,0) 0%, rgba(11,12,14,0.85) 100%);
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .tile-caption strong { font-size: 20px; font-weight: 700; }
+  .tile-caption small { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
+  .tile-caption .sub { font-size: 13px; font-weight: 400; color: var(--text-3); }
+  .links { display: flex; flex-direction: column; margin-top: 36px; }
+  .links a {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    min-height: 56px; border-top: 1px solid var(--line); font-size: 15px;
+  }
+  .links a:last-child { border-bottom: 1px solid var(--line); }
+  .links .service { color: var(--text-3); }
+
+  /* Features */
+  .rows { display: flex; flex-direction: column; }
+  .row { border-top: 1px solid var(--line); padding: 24px 0; display: flex; flex-direction: column; gap: 10px; }
+  .row:last-child { border-bottom: 1px solid var(--line); }
+  .row .stat { font-family: var(--cond); font-weight: 600; font-size: 44px; line-height: 1; color: var(--accent); }
+  .row h3 { font-size: 18px; font-weight: 700; }
+  .row p { font-size: 15px; line-height: 1.75; color: var(--text-3); }
+
+  /* Tips */
+  .cards { display: grid; gap: 12px; }
+  .card { background: var(--surface); border-radius: 4px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+  .surface .card { background: var(--frame); }
+  .card h3 { font-size: 17px; font-weight: 700; }
+  .card p { font-size: 15px; line-height: 1.75; color: var(--text-3); }
+
+  /* FAQ */
+  .faq { display: flex; flex-direction: column; }
+  .faq > div { border-top: 1px solid var(--line); padding: 22px 0; display: flex; flex-direction: column; gap: 10px; }
+  .faq > div:last-child { border-bottom: 1px solid var(--line); }
+  .faq h3 { font-size: 16px; font-weight: 700; line-height: 1.6; }
+  .faq p { font-size: 15px; line-height: 1.75; color: var(--text-3); }
+
+  /* Final CTA */
+  .closing { position: relative; overflow: hidden; padding: 0; background: var(--ink); }
+  .closing-media { position: relative; height: 52vw; max-height: 420px; }
+  .closing-media img { width: 100%; height: 100%; object-fit: cover; }
+  .closing-media::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(11,12,14,0.35) 0%, rgba(11,12,14,0.85) 70%, var(--ink) 100%);
+  }
+  .closing-body { position: relative; z-index: 2; margin-top: -60px; padding-bottom: 88px; display: flex; flex-direction: column; gap: 20px; }
+  .closing-body h2 { font-weight: 900; font-size: clamp(32px, 10vw, 40px); line-height: 1.2; letter-spacing: -0.02em; }
+
+  /* Footer */
+  .site-foot { border-top: 1px solid var(--line); padding: 40px 0 32px; }
+  .site-foot .wrap { display: flex; flex-direction: column; gap: 20px; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 4px 24px; }
+  .foot-links a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
+
+  @media (min-width: 900px) {
+    .wrap { padding: 0 56px; }
+    .eyebrow { font-size: 17px; }
+    .h2 { font-size: 56px; line-height: 1.2; letter-spacing: -0.02em; }
+    .lead { font-size: 16px; }
+    .note { font-size: 13px; }
+    .badge { top: 16px; right: 16px; padding: 3px 8px; font-size: 11px; }
+    section { padding: 120px 0; }
+    .section-head { margin-bottom: 56px; }
+    .section-head.is-split { flex-direction: row; justify-content: space-between; align-items: flex-end; gap: 40px; }
+    .section-head.is-split .lead { max-width: 380px; }
+
+    .site-head { height: 80px; }
+    .nav-links { display: flex; align-items: center; gap: 36px; }
+    .nav-links a { font-size: 15px; }
+    .head-cta { padding: 0 18px; min-height: 40px; border: 1px solid var(--accent); border-radius: 4px; }
+
+    .hero { display: grid; grid-template-columns: 1fr; }
+    .hero-media { position: absolute; inset: 0; height: 100%; max-height: none; }
+    .hero-media img { object-position: right center; }
+    .hero-media::after {
+      background: linear-gradient(90deg, var(--ink) 0%, rgba(11,12,14,0.92) 38%, rgba(11,12,14,0.55) 58%, rgba(11,12,14,0) 78%),
+                  linear-gradient(180deg, rgba(11,12,14,0.5) 0%, rgba(11,12,14,0) 20%, rgba(11,12,14,0) 82%, var(--ink) 100%);
+    }
+    .hero-body { margin: 0; min-height: 780px; padding: 180px 0 96px; max-width: 820px; gap: 28px; }
+    .hero h1 { font-size: clamp(56px, 6vw, 88px); line-height: 1.1; letter-spacing: -0.03em; }
+    .hero .badge { top: auto; bottom: 24px; right: 24px; }
+    .hero p.lead { font-size: 19px; line-height: 1.8; max-width: 520px; }
+    .hero-actions { flex-direction: row; align-items: center; gap: 20px; }
+    .hero-actions .cta { min-height: 60px; padding: 0 32px; font-size: 17px; }
+    .hero-actions .cta-note { text-align: left; font-size: 13px; }
+
+    .compare-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+    .shot-frame { aspect-ratio: 4 / 3; }
+    .shot-meta span:first-child { font-size: 16px; }
+
+    .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 340px; }
+    .tile { aspect-ratio: auto; height: 100%; }
+    .tile.is-lead { grid-column: span 2; grid-row: span 2; }
+    .tile.is-lead .tile-caption { flex-direction: row; justify-content: space-between; align-items: baseline; padding: 28px 32px; }
+    .tile.is-lead .tile-caption strong { font-size: 24px; }
+    .links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 56px; }
+    .links a { min-height: 64px; border-bottom: 1px solid var(--line); font-size: 16px; }
+
+    .rows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+    .row { border-top: 1px solid var(--line); border-bottom: none !important; padding: 28px 0 0; }
+    .row.is-lead { border-top-color: var(--accent); }
+    .row .stat { font-size: 56px; }
+    .row h3 { font-size: 20px; }
+    .row p { line-height: 1.8; }
+
+    .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .card { padding: 32px; }
+    .card h3 { font-size: 19px; }
+    .card p { line-height: 1.8; }
+
+    .faq-layout { display: grid; grid-template-columns: 400px minmax(0, 1fr); gap: 80px; }
+    .faq-layout .section-head { margin-bottom: 0; }
+    .faq > div { padding: 28px 0; }
+    .faq h3 { font-size: 18px; }
+    .faq p { line-height: 1.8; }
+
+    .closing { display: grid; }
+    .closing-media { position: absolute; inset: 0; height: 100%; max-height: none; }
+    .closing-media img { object-position: right center; }
+    .closing-media::after {
+      background: linear-gradient(90deg, rgba(11,12,14,0.94) 0%, rgba(11,12,14,0.6) 48%, rgba(11,12,14,0) 78%);
+    }
+    .closing-body { margin: 0; min-height: 560px; padding: 120px 0; justify-content: center; max-width: 720px; gap: 28px; }
+    .closing-body h2 { font-size: clamp(56px, 6vw, 80px); line-height: 1.1; letter-spacing: -0.03em; }
+    .closing-body .lead { font-size: 19px; line-height: 1.8; color: var(--text-2); }
+    .closing-body .hero-actions { flex-direction: row; align-items: center; gap: 20px; }
+
+    .site-foot { padding: 48px 0 40px; }
+    .site-foot .wrap { gap: 28px; }
+    .foot-top { display: flex; justify-content: space-between; align-items: center; }
+    .foot-links { gap: 32px; }
+    .foot-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
+    .foot-bottom .note { max-width: 720px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <span class="logo">NW mobile</span>
+    <nav class="nav-links">
+      <a href="#gallery">作例</a>
+      <a href="#tips">撮影のコツ</a>
+      <a href="#faq">よくある質問</a>
+    </nav>
+    <a class="head-cta" href="#">レンタルページへ</a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-media">
+      <img src="images/baseball-night.jpg" alt="ナイター照明に照らされた球場のスタンドとグラウンド（イメージ）" width="1500" height="1000" fetchpriority="high">
+      <p class="badge">イメージ</p>
+    </div>
+    <div class="wrap">
+      <div class="hero-body">
+        <p class="kicker">vivo X300 Ultra ＋ 望遠レンズ</p>
+        <h1>スタンドから、<br>推しを。</h1>
+        <p class="lead">外付けの望遠レンズで、客席から表情まで。いつものiPhoneでは届かなかった距離を、スマホのレンタルで。</p>
+        <div class="hero-actions">
+          <a class="cta" href="#">レンタルページを見る<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5"/><path d="M6 5h5v5"/></svg></a>
+          <p class="cta-note">提携レンタル会社 [提携先名] のサイトに移動します</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compare -->
+  <section id="compare">
+    <div class="wrap">
+      <div class="section-head is-split">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <p class="eyebrow">Same seat, same moment</p>
+          <h2 class="h2">同じ席から、ここまで違う。</h2>
+        </div>
+        <p class="lead">スタンドの同じ座席から、同じ瞬間を撮り比べました。</p>
+      </div>
+      <div class="compare-grid">
+        <div class="shot">
+          <div class="shot-frame">
+            <img src="images/baseball-crowd.jpg" alt="客席から見た球場の全景。選手は小さくしか写らない（イメージ）" width="1500" height="1000" loading="lazy">
+            <p class="badge">イメージ</p>
+          </div>
+          <p class="shot-meta"><span>いつものiPhone</span><span>[倍率]x</span></p>
+        </div>
+        <div class="shot is-tele">
+          <div class="shot-frame is-tele">
+            <img src="images/pitcher-close.jpg" alt="望遠レンズで寄って撮った投手の上半身。表情まで写っている（イメージ）" width="1000" height="1500" loading="lazy">
+            <p class="badge">イメージ</p>
+          </div>
+          <p class="shot-meta"><span>vivo X300 Ultra ＋ 望遠レンズ</span><span>[倍率]x</span></p>
+        </div>
+      </div>
+      <p class="note" style="margin-top: 36px;">※ 掲載している写真はイメージです。</p>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Scenes</p>
+        <h2 class="h2">推しがいる場所なら、どこでも。</h2>
+      </div>
+      <div class="gallery">
+        <div class="tile is-lead">
+          <img src="images/baseball-field.jpg" alt="ドーム球場のグラウンドと選手たち（イメージ）" width="1500" height="1329" loading="lazy">
+          <p class="badge">イメージ</p>
+          <div class="tile-caption">
+            <strong>スポーツ観戦</strong>
+            <small>[会場] ／ [倍率]x</small>
+          </div>
+        </div>
+        <div class="tile">
+          <img src="images/live-stage.jpg" alt="照明に照らされたライブのステージと観客（イメージ）" width="1000" height="1500" loading="lazy">
+          <p class="badge">イメージ</p>
+          <div class="tile-caption">
+            <strong>ライブ <span class="sub">撮影OKの公演</span></strong>
+            <small>[会場] ／ [倍率]x</small>
+          </div>
+        </div>
+        <div class="tile">
+          <img src="images/travel-ridge.jpg" alt="夕暮れに重なる山の稜線（イメージ）" width="1500" height="1000" loading="lazy">
+          <p class="badge">イメージ</p>
+          <div class="tile-caption">
+            <strong>旅行</strong>
+            <small>[場所] ／ [倍率]x</small>
+          </div>
+        </div>
+      </div>
+      <div class="links">
+        <a href="#"><span>もっと作例を見る<span class="service">　X</span></span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5"/><path d="M6 5h5v5"/></svg></a>
+        <a href="#"><span>撮影レポートを読む<span class="service">　note</span></span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5"/><path d="M6 5h5v5"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="surface">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">vivo X300 Ultra</p>
+        <h2 class="h2">スマホの手軽さで、望遠レンズの距離。</h2>
+      </div>
+      <div class="rows">
+        <div class="row is-lead">
+          <p class="stat">[倍率]x</p>
+          <h3>外付け望遠レンズで、ぐっと寄れる</h3>
+          <p>スマホに望遠レンズを取り付けるだけ。スタンドの上段からでも、選手やステージの表情まで狙えます。</p>
+        </div>
+        <div class="row">
+          <h3>暗い会場でも [確認した性能を記載]</h3>
+          <p>[ナイターやライブ会場で実際に確認した内容を記載]</p>
+        </div>
+        <div class="row">
+          <h3>撮ったら、すぐに送れる</h3>
+          <p>カメラではなくスマホなので、撮った写真をその場で家族や友だちに送ったり、SNSに投稿したりできます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tips -->
+  <section id="tips">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Tips</p>
+        <h2 class="h2">客席で、ブレずに撮るコツ。</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <h3>脇を締めて、両手で構える</h3>
+          <p>望遠ほど、わずかな手の揺れが大きく写ります。肘を体につけ、両手でしっかり支えましょう。</p>
+        </div>
+        <div class="card">
+          <h3>動く瞬間は、連写で</h3>
+          <p>ゴールや決めポーズは一瞬です。連写で撮っておき、あとからベストの1枚を選びます。</p>
+        </div>
+        <div class="card">
+          <h3>撮影ルールは、行く前に確認</h3>
+          <p>撮影や望遠レンズの持ち込みは、会場や公演ごとにルールが違います。公式サイトやチケットの注意事項を確認しておきましょう。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="surface">
+    <div class="wrap">
+      <div class="faq-layout">
+        <div class="section-head">
+          <h2 class="h2">よくある質問</h2>
+        </div>
+        <div class="faq">
+          <div>
+            <h3>予約や料金はどこで確認できますか？</h3>
+            <p>レンタルは提携レンタル会社 [提携先名] が行っています。料金・受け渡し・補償は、リンク先のレンタルページでご確認ください。</p>
+          </div>
+          <div>
+            <h3>ライブで撮影してもいいですか？</h3>
+            <p>撮影できるかどうかは、公演や会場によって異なります。撮影が許可された公演・会場でのみご利用ください。</p>
+          </div>
+          <div>
+            <h3>iPhoneしか使ったことがなくても使えますか？</h3>
+            <p>[回答を記載]。レンズの付け方や撮り方は、noteの撮影レポートでも紹介しています。</p>
+          </div>
+          <div>
+            <h3>壊してしまったらどうなりますか？</h3>
+            <p>補償の内容は、提携レンタル会社の規定によります。予約の前にリンク先でご確認ください。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing -->
+  <section class="closing">
+    <div class="closing-media">
+      <img src="images/live-crowd.jpg" alt="ライブ会場のステージと観客（イメージ）" width="1500" height="1000" loading="lazy">
+      <p class="badge">イメージ</p>
+    </div>
+    <div class="wrap">
+      <div class="closing-body">
+        <h2>次の試合も、<br>次のライブも。</h2>
+        <p class="lead">その日だけ、望遠で撮れるスマホを。</p>
+        <div class="hero-actions">
+          <a class="cta" href="#">レンタルページを見る<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5"/><path d="M6 5h5v5"/></svg></a>
+          <p class="cta-note">提携レンタル会社 [提携先名] のサイトに移動します</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <span class="logo">NW mobile</span>
+      <div class="foot-links">
+        <a href="#">X</a>
+        <a href="#">note</a>
+        <a href="#">運営会社</a>
+        <a href="#">プライバシーポリシー</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p class="note">NW mobile は、[提携先名] のスマホレンタルサービスをご紹介しています。レンタル契約は [提携先名] との間で結ばれます。撮影は各会場・公演のルールに従ってください。掲載している写真はイメージです。</p>
+      <p class="note">© NW mobile</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
