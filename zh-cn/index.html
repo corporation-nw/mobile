@@ -253,7 +253,52 @@
     .foot-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
     .foot-bottom .note { max-width: 720px; }
   }
+
+  /* ---------- 演出（浮き上がり・背景の文字） ---------- */
+  /* JavaScript が動くときだけ隠す。動かない環境では、そのまま読める。 */
+  .js .hero-body > *,
+  .js .hero-media,
+  .js .section-head > *,
+  .js .shot,
+  .js .tile,
+  .js .card,
+  .js .row,
+  .js .faq-item,
+  .js .closing-body > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s cubic-bezier(0.22, 0.61, 0.26, 1), transform 1s cubic-bezier(0.22, 0.61, 0.26, 1);
+  }
+  .js .is-in { opacity: 1; transform: none; }
+
+  /* 背景にうっすら浮かぶ大きな文字 */
+  section { position: relative; overflow: hidden; }
+  section > .wrap { position: relative; z-index: 1; }
+  .wm {
+    position: absolute; top: 50%; right: -0.04em; margin-top: -0.52em; z-index: 0;
+    font-family: var(--cond), 'Arial Narrow', sans-serif; font-weight: 600;
+    font-size: clamp(90px, 20vw, 200px); line-height: 1; letter-spacing: 0.06em;
+    color: var(--text); opacity: 0.045; white-space: nowrap;
+    pointer-events: none; user-select: none; will-change: transform;
+  }
+  .wm--left { right: auto; left: -0.04em; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .hero-body > *,
+    .js .hero-media,
+    .js .section-head > *,
+    .js .shot,
+    .js .tile,
+    .js .card,
+    .js .row,
+    .js .faq-item,
+    .js .closing-body > * {
+      opacity: 1; transform: none; transition: none;
+    }
+    .wm { display: none; }
+  }
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
@@ -290,6 +335,7 @@
 
   <!-- Compare -->
   <section id="compare">
+    <span class="wm wm--left" data-watermark aria-hidden="true">ZOOM</span>
     <div class="wrap">
       <div class="section-head is-split">
         <div style="display: flex; flex-direction: column; gap: 14px;">
@@ -322,6 +368,7 @@
 
   <!-- Gallery -->
   <section id="gallery" style="padding-top: 0;">
+    <span class="wm" data-watermark aria-hidden="true">SHOT</span>
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Scenes</p>
@@ -431,6 +478,7 @@
 
   <!-- Closing -->
   <section class="closing">
+    <span class="wm wm--left" data-watermark aria-hidden="true">NW</span>
     <div class="closing-media">
       <img src="../images/gallery/x300-12.jpg" alt="夜晚坐在水边的人的剪影" width="1400" height="1051" loading="lazy">
     </div>
@@ -467,5 +515,71 @@
   </div>
 </footer>
 
+<script>
+/* NW mobile — 表示の演出。動きを減らす設定の端末では何も動かさない。 */
+(function () {
+  'use strict';
+  var SELECTOR = ['.hero-body > *', '.hero-media', '.section-head > *', '.shot', '.tile', '.card', '.row', '.faq-item', '.closing-body > *'].join(', ');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  var slow = reduce && reduce.matches;
+  function showAll(items) { for (var i = 0; i < items.length; i++) items[i].classList.add('is-in'); }
+  function setDelay(el) {
+    var parent = el.parentElement;
+    if (!parent) return;
+    var step = parent.classList.contains('hero-body') ? 120 : 70, index = 0;
+    for (var i = 0; i < parent.children.length; i++) { if (parent.children[i] === el) { index = i; break; } }
+    var delay = Math.min(index * step, 420);
+    if (delay) el.style.transitionDelay = delay + 'ms';
+  }
+  function reveal() {
+    var items = document.querySelectorAll(SELECTOR);
+    if (!items.length) return;
+    if (slow || !('IntersectionObserver' in window)) { showAll(items); return; }
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (!entries[i].isIntersecting) continue;
+        entries[i].target.classList.add('is-in');
+        io.unobserve(entries[i].target);
+      }
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+    for (var i = 0; i < items.length; i++) { setDelay(items[i]); io.observe(items[i]); }
+    function failsafe() {
+      var vh = window.innerHeight;
+      for (var i = 0; i < items.length; i++) {
+        var el = items[i];
+        if (el.classList.contains('is-in')) continue;
+        var box = el.getBoundingClientRect();
+        if (box.top < vh && box.bottom > 0) el.classList.add('is-in');
+      }
+    }
+    if (document.readyState === 'complete') window.setTimeout(failsafe, 80);
+    else window.addEventListener('load', function () { window.setTimeout(failsafe, 80); });
+    window.setTimeout(failsafe, 1500);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) window.setTimeout(failsafe, 300); });
+  }
+  function watermarks() {
+    var marks = document.querySelectorAll('[data-watermark]');
+    if (!marks.length || slow) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var vh = window.innerHeight;
+      for (var i = 0; i < marks.length; i++) {
+        var mark = marks[i], box = mark.parentElement.getBoundingClientRect();
+        if (box.bottom < -300 || box.top > vh + 300) continue;
+        var progress = (vh - box.top) / (vh + box.height);
+        mark.style.transform = 'translate3d(0,' + ((0.5 - progress) * 150).toFixed(1) + 'px,0)';
+      }
+    }
+    function onScroll() { if (ticking) return; ticking = true; window.requestAnimationFrame(update); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+  function start() { reveal(); watermarks(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
 </body>
 </html>
