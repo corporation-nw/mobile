@@ -100,6 +100,8 @@
   }
   .hero-body { position: relative; z-index: 2; margin-top: -40px; padding-bottom: 56px; display: flex; flex-direction: column; gap: 20px; }
   .kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--accent); }
+  .hero .lead strong { color: var(--text); font-weight: 700; }
+  .hero-credit { position: absolute; top: 12px; right: 16px; z-index: 3; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: rgba(243,242,238,0.7); }
   .hero h1 { font-weight: 900; font-size: clamp(38px, 12vw, 52px); line-height: 1.12; letter-spacing: -0.02em; }
   .hero p.lead { color: var(--text-2); font-size: 16px; }
   .hero-actions { display: flex; flex-direction: column; gap: 10px; }
@@ -207,6 +209,7 @@
     .hero { display: grid; grid-template-columns: 1fr; }
     .hero-media { position: absolute; inset: 0; height: 100%; max-height: none; }
     .hero-media img { object-position: right center; }
+    .hero-credit { top: auto; bottom: 24px; right: 32px; }
     .hero-media::after {
       background: linear-gradient(90deg, var(--ink) 0%, rgba(11,12,14,0.92) 38%, rgba(11,12,14,0.55) 58%, rgba(11,12,14,0) 78%),
                   linear-gradient(180deg, rgba(11,12,14,0.5) 0%, rgba(11,12,14,0) 20%, rgba(11,12,14,0) 82%, var(--ink) 100%);
@@ -333,12 +336,13 @@
   <section class="hero">
     <div class="hero-media">
       <img src="../images/gallery/x300-13.jpg" alt="用望远拍摄的、浮现在晚霞天空中的建筑起重机剪影" width="1400" height="1050" fetchpriority="high">
+      <p class="hero-credit">照片：vivo X300 Ultra ／ 170mm 拍摄</p>
     </div>
     <div class="wrap">
       <div class="hero-body">
-        <p class="kicker">vivo X300 Ultra ／ 170mm 拍摄</p>
+        <p class="kicker">开始租借 ／ vivo X500 Pro Max</p>
         <h1>从看台上，<br>捕捉你的本命。</h1>
-        <p class="lead">外接望远镜头，从观众席也能拍到表情。以往 iPhone 拍不到的距离，用租借的手机来实现。</p>
+        <p class="lead"><strong>vivo X500 Pro Max</strong> 上装上相当于400mm的外接望远镜头，从观众席也能拍到表情。以往 iPhone 拍不到的距离，用租借的手机来实现。</p>
         <div class="hero-actions">
           <a class="cta" href="https://www.apex106.com/smartphone/android/x500-pro-max.php" target="_blank" rel="noopener sponsored">前往 APEX RENTALS 租借<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5"/><path d="M6 5h5v5"/></svg></a>
           <p class="cta-note">可在 APEX RENTALS 的页面申请租借。由于是海外规格的设备，并非用于在日本国内通信，仅面向使用相机功能的用户。</p>
